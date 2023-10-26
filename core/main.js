@@ -14,17 +14,14 @@ var Reliquary = {
 	setChargeOnItem: function(chargedItem, chargeItem, repair) {
 		Callback.addCallback("ServerPlayerTick", function(player) {
 			let actor = new PlayerActor(player);
-			for (let i = 0; i <= 36; i++) {
-				for (let y = 0; y <= 36; y++) {
-					let item = actor.getInventorySlot(i);
-					let it = actor.getInventorySlot(y);
-					if (item.id == chargedItem && it.id == chargeItem &&
-						World.getThreadTime() % 4 == 0 &&
-						item.data < Item.getMaxDamage(chargedItem)) {
-						actor.setInventorySlot(i, item.id, item.count, item.data - repair, item.extra);
-						actor.setInventorySlot(y, it.id, it.count - 1, it.data, it.extra);
-						break;
-					}
+			for (let i = 0, y = 0; i <= 36, y <= 36; i++, y++) {
+				let item = actor.getInventorySlot(i), it = actor.getInventorySlot(y);
+				if (item.id == chargedItem && it.id == chargeItem &&
+				    World.getThreadTime() % 4 == 0 &&
+				    item.data < Item.getMaxDamage(chargedItem)) {
+					actor.setInventorySlot(i, item.id, item.count, item.data - repair, item.extra);
+					actor.setInventorySlot(y, it.id, it.count - 1, it.data, it.extra);
+					break;
 				}
 			}
 		});
